@@ -1,15 +1,23 @@
 .layout {
   display: flex;
   flex-direction: column;
-  width:520px;
-  height: 160px;
 }
 .row {
   display: flex;
   flex-direction: row;
 }
+.row.second,
+.row.fourth {
+  margin-left: 120px;
+}
+.row.third {
+  margin-left: 140px;
+}
 .key {
-  width: 40px;
-  height: 40px;
+  width: 80px;
+  height: 80px;
   border: solid 1px red;
+}
+.keyvalue {
+  display: none;
 }
