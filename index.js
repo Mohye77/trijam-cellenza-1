@@ -53,8 +53,9 @@ function initPath(start, end, isLeftSide)
         console.log(lastKey)
         console.log(path)
         lastKey = getNextKey(keyCodeByKey[lastKey], end, isLeftSide, path);
-        if(lastKey === -1)
+        if(lastKey === -1 || lastKey == null)
         {
+            console.log("Je reset");
             path = [];
             lastKey = start;
         }
@@ -67,6 +68,10 @@ function getNextKey(key, endKey, isLeftSide, currentPath)
 { 
     if(isLeftSide)
     {
+        if(key.rightNeighbors == null)
+        {
+            console.log("je suis null",key)
+        }
         if(key.rightNeighbors[endKey] != null)
         {
             return endKey;
@@ -88,6 +93,10 @@ function getNextKey(key, endKey, isLeftSide, currentPath)
     }
     else
     {
+        if(key.leftNeighbors == null)
+        {
+            console.log("je suis null",key)
+        }
         if(key.leftNeighbors[endKey] != null)
         {
             return endKey;
@@ -117,7 +126,7 @@ function getStartKey(startLeftSide)
     {
         if(startKeyRandom == 0)
         {
-            startKey = "0"; 
+            startKey = "1"; 
         } else if (startKeyRandom == 1)
         {
             startKey = "A"; 
@@ -171,7 +180,7 @@ function getEndKey(startLeftSide)
     {
         if(endKeyRandom == 0)
         {
-            endKey = "0"; 
+            endKey = "1"; 
         } else if (endKeyRandom == 1)
         {
             endKey = "A"; 
