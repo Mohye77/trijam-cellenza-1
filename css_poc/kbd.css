@@ -1,0 +1,37 @@
+#keyboard { margin-top: 0px; margin-bottom: 0px }
+#keyboard #keyboard-bg { position: inherit; border: solid 1px #ddd; padding: 9px; box-sizing: content-box; border-radius: 6px; min-width: 56px; min-height: 56px }
+#keyboard #keyboard-bg { width: 1215px; height: 351px; background-color: rgb(238, 238, 238); } 
+#keyboard-bg div, #keyboard-bg label { position: absolute; border-color: #000; box-sizing: border-box; background-clip: padding-box }
+
+.kl0 > div, .kl3 > div, .kl6 > div, .kl9 > div { text-align: left }
+.kl1 > div, .kl4 > div, .kl7 > div, .kl10 > div { text-align: center }
+.kl2 > div, .kl5 > div, .kl8 > div, .kl11 > div { text-align: right }
+
+.kl0 > div, .kl1 > div, .kl2 > div { vertical-align: top }
+.kl3 > div, .kl4 > div, .kl5 > div { vertical-align: middle }
+.kl6 > div, .kl7 > div, .kl8 > div { vertical-align: bottom }
+
+.kl9, .kl10, .kl11 { top: 100%; margin-top: -1px; font-size: 9px !important; max-height: 1em !important; white-space: nowrap; overflow: hidden }
+
+.kl.ts1 { font-size: 8px; line-height: 1em }
+.kl.ts2 { font-size: 10px; line-height: 1em }
+.kl.ts3 { font-size: 12px; line-height: 1em }
+.kl.ts4 { font-size: 14px; line-height: 1em }
+.kl.ts5 { font-size: 16px; line-height: 1em }
+.kl.ts6 { font-size: 18px; line-height: 1em }
+.kl.ts7 { font-size: 20px; line-height: 1em }
+.kl.ts8 { font-size: 22px; line-height: 1em }
+.kl.ts9 { font-size: 24px; line-height: 1em }
+
+.kb { border-radius: 5px; border: 1px solid black; background-color: rgb(204, 204, 204); width: 54px; height: 54px; display: block }
+.kt { border-radius: 3px; border: 1px solid rgba(0, 0, 0, 0.1) !important; background-color: rgb(252, 252, 252); width: 42px; height: 42px; display: block }
+.kls { font-family:Arial, Helvetica, sans-serif; padding: 3px; width: 42px; height: 42px; }
+.kl { width: 36px; height: 36px; color: rgb(8, 8, 8); }
+.kl > div { display: table-cell; position: static !important; width: 36px; height: 36px; max-width: 36px; }
+	
+.kr1 .kt, .kr1 .kls { top: 3px; }
+.kr2 .kt, .kr2 .kls { top: 84px; }	.kr2 .kb { top: 81px }
+.kr3 .kt, .kr3 .kls { top: 138px; }	.kr3 .kb { top: 135px }
+.kr4 .kt, .kr4 .kls { top: 192px; }	.kr4 .kb { top: 189px }
+.kr5 .kt, .kr5 .kls { top: 246px; }	.kr5 .kb { top: 243px }
+.kr6 .kt, .kr6 .kls { top: 300px; }	.kr6 .kb { top: 297px }
