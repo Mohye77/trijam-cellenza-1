@@ -1,23 +1,75 @@
+body {
+  background-image: url("../images/background.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  display: flex;
+}
 .layout {
+  justify-content: center;
   display: flex;
   flex-direction: column;
+  width: 1000px;
+  margin: 0 auto;
 }
 .row {
   display: flex;
   flex-direction: row;
 }
-.row.second,
-.row.fourth {
+.row.second {
   margin-left: 40px;
 }
 .row.third {
   margin-left: 60px;
 }
+.row.fourth {
+  margin-left: 20px;
+}
 .key {
   width: 80px;
   height: 80px;
   border: solid 1px red;
+  background-image: url("../images/backgrounds/back1.png");
+}
+.key.alternate {
+  background-image: url("../images/backgrounds/back2.png");
+}
+.key.transitionN {
+  background-image: url("../images/backgrounds/transitionN.png");
+}
+.key.transitionE {
+  background-image: url("../images/backgrounds/transitionE.png");
+}
+.key.transitionW {
+  background-image: url("../images/backgrounds/transitionW.png");
+}
+.key.transitionS {
+  background-image: url("../images/backgrounds/transitionS.png");
+}
+.key.way {
+  background-image: url("../images/backgrounds/way/1.png");
+}
+.key.way.alternate {
+  background-image: url("../images/backgrounds/way/2.png");
 }
 .keyvalue {
   display: none;
+}
+
+.character {
+  background-image: url("../images/character/idle.gif");
+  background-size: cover;
+  height: 40px;
+  width: 22px;
+  position: fixed;
+}
+
+.obstacle {
+  background-image: url("../images/obstacles/1.png");
+  background-size: cover;
+  width: 40px;
+  height: 40px;
+  position: fixed;
+}
+.obstacle.alternate {
+  background-image: url("../images/obstacles/2.png");
 }
