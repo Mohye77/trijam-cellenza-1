@@ -1,10 +1,10 @@
 function initUI(){
-    
+    initGame()
 }
 
 
 
-initGame()
+function initGame()
 {
     var startLeftSide = getRandomInt(2) === 1;
     var startKey= getStartKey(startLeftSide);
@@ -14,19 +14,24 @@ initGame()
 
 function initPath(start, end, isLeftSide)
 {
+    console.log("start", start)
+    console.log("end", end)
+    console.log("isLeftSide", isLeftSide)
     var lastKey = start;
     var path = [];
     while(lastKey != end)
     {
-        path.push(start);
-        lastKey = getNextKey(lastKey, end, isLeftSide, path);
+        path.push(lastKey); 
+        console.log(lastKey)
+        console.log(path)
+        lastKey = getNextKey(keyCodeByKey[lastKey], end, isLeftSide, path);
         if(lastKey === -1)
         {
             path = [];
             lastKey = start;
         }
     }
-    path.push(end)
+    path.push(lastKey)
 
 }
 
@@ -42,11 +47,11 @@ function getNextKey(key, endKey, isLeftSide, currentPath)
         {
             var randomKey = key.rightNeighbors[getRandomInt(key.rightNeighbors.length - 1)];
 
-            if(randomKey = -1)
+            if(key.rightNeighbors.length === 0)
             {
                 return -1;
             }
-            while(currentPath.Contains(randomKey))
+            while(currentPath.findIndex( (x) => { return x === randomKey}) != -1)
             {
                 randomKey = key.rightNeighbors[getRandomInt(key.rightNeighbors.length - 1)];
             }
@@ -63,11 +68,11 @@ function getNextKey(key, endKey, isLeftSide, currentPath)
         {
             var randomKey = key.leftNeighbors[getRandomInt(key.leftNeighbors.length - 1)];
 
-            if(randomKey = -1)
+            if(key.rightNeighbors.length === 0)
             {
                 return -1;
             }
-            while(currentPath.Contains(randomKey))
+            while(currentPath.findIndex( (x) => { return x === randomKey}) != -1)
             {
                 randomKey = key.leftNeighbors[getRandomInt(key.leftNeighbors.length - 1)];
             }
