@@ -61,6 +61,11 @@ body {
   height: 40px;
   width: 22px;
   position: fixed;
+  display: none;
+}
+
+.character.run {
+  background-image: url("../images/character/run.gif");
 }
 
 .obstacle {
@@ -69,7 +74,25 @@ body {
   width: 40px;
   height: 40px;
   position: fixed;
+  display: none;
 }
+
 .obstacle.alternate {
   background-image: url("../images/obstacles/2.png");
+}
+
+.goldenidol {
+  background-image: url("../images/goldenidol.png");
+  background-size: cover;
+  width: 40px;
+  height: 40px;
+  position: fixed;
+  display: none;
+}
+
+.menu,
+.error,
+.success {
+  background: #fff;
+  position: fixed;
 }
