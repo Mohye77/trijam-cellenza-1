@@ -3,15 +3,20 @@ var gameState = {
   error: false,
 };
 
-var character = {};
-var menu = {};
-var error = {};
-var success = {};
-var keys = [];
+var domElements = {
+  character: {},
+  goldenIdol: {},
+  menu: {},
+  error: {},
+  success: {},
+  keys: [],
+  keyWay: [],
+};
+var usercharWay = [];
 
 function initUI() {
-  keys = document.querySelectorAll(".key");
-  keys.forEach((key) => {
+  domElements.keys = document.querySelectorAll(".key");
+  domElements.keys.forEach((key) => {
     const val = getRandomInt(2);
     if (val == 1) {
       key.classList.add("alternate");
@@ -19,10 +24,11 @@ function initUI() {
   });
 
   document.addEventListener("keydown", handleKeydown);
-  character = document.querySelector(".character");
-  menu = document.querySelector(".menu");
-  success = document.querySelector(".success");
-  error = document.querySelector(".error");
+  domElements.character = document.querySelector(".character");
+  domElements.goldenIdol = document.querySelector(".goldenIdol");
+  domElements.menu = document.querySelector(".menu");
+  domElements.success = document.querySelector(".success");
+  domElements.error = document.querySelector(".error");
 
   // initGame()
 }
@@ -38,10 +44,11 @@ const keyPath = ["A", "Z", "E", "R", "T", "Y"];
 
 function showPath() {
   keyPath.forEach((char) => {
-    keys.forEach((key) => {
+    domElements.keys.forEach((key) => {
       const keychar = key.getAttribute("keychar");
       if (keychar === char) {
         key.classList.add("way");
+        domElements.keyWay.push(key);
       }
     });
   });
@@ -49,49 +56,80 @@ function showPath() {
 
 function setCharacterStartPos() {
   const startChar = keyPath[0];
-  var startKey;
+  let startKey;
 
-  keys.forEach((key) => {
+  domElements.keyWay.forEach((key) => {
     if (key.getAttribute("keychar") === startChar) {
       startKey = key;
     }
   });
 
   if (!!startKey) {
-    setPosition(character, getPosition(startKey));
-    character.style.display = "block";
+    setPosition(domElements.character, getPosition(startKey));
+    domElements.character.style.display = "block";
+  }
+}
+
+function setGoldenIdolPos() {
+  const endChar = keyPath[keyPath.length - 1];
+  let endKey;
+
+  domElements.keyWay.forEach((key) => {
+    if (key.getAttribute("keychar") === endChar) {
+      endKey = key;
+    }
+  });
+
+  if (!!endKey) {
+    setPosition(domElements.goldenIdol, getPosition(endKey));
+    domElements.goldenIdol.style.display = "block";
+  }
+}
+
+function moveCharacter() {
+  for (let charIndex = 0; charIndex < usercharWay.length; charIndex++) {
+    const userChar = usercharWay[charIndex];
+
+    domElements.keys.forEach((key) => {
+      if (userChar === key.getAttribute("keychar")) {
+        console.log(key);
+        setPosition(domElements.character, getPosition(key));
+        return;
+      }
+    });
   }
 }
 
 handleKeydown = function (evt) {
-  evt.preventDefault();
-
   switch (evt.which) {
     case 13: //enter
-      menu.style.display = "none";
+      evt.preventDefault();
+      domElements.menu.style.display = "none";
       showPath();
       setCharacterStartPos();
+      setGoldenIdolPos();
       setTimeout(() => {
         var userWay = prompt("Show me the way! (Use CAPS LOCK)");
-        for (let charIndex = 0; charIndex < userWay.length; charIndex++) {
-          const char = userWay[charIndex];
+        usercharWay = Array.from(userWay);
+        for (let charIndex = 0; charIndex < usercharWay.length; charIndex++) {
+          const userChar = usercharWay[charIndex];
           if (charIndex > keyPath.length - 1) {
-            if (char !== keyPath[charIndex]) {
+            if (userChar !== keyPath[charIndex]) {
               gameState.error = true;
               return;
             }
           }
         }
-        //moveCharacter
-      }, 5000);
+        moveCharacter();
+
+        if (gameState.error === true) {
+          domElements.error.style.display = "block";
+        } else {
+          domElements.success.style.display = "block";
+        }
+      }, 1000);
       break;
     default:
       break;
-  }
-
-  if (gameState.error === true) {
-    error.style.display = "block";
-  } else {
-    success.style.display = "success";
   }
 };
