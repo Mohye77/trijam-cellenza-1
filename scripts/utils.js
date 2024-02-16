@@ -12,8 +12,8 @@ function getPosition(el) {
 }
 
 function setPosition(el, position){
-  el.bottom = position.bottom;
-  el.top = position.top;
-  el.left = position.left;
-  el.right = position.right;
+  el.style.bottom = position.bottom;
+  el.style.top = position.top;
+  el.style.left = position.left;
+  el.style.right = position.right;
 }
