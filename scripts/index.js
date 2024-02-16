@@ -6,6 +6,8 @@ var gameState = {
 var domElements = {
   character: {},
   goldenIdol: {},
+  greenbush: {},
+  redbush: {},
   menu: {},
   error: {},
   success: {},
@@ -30,6 +32,8 @@ function initUI() {
   domElements.menu = document.querySelector(".menu");
   domElements.success = document.querySelector(".success");
   domElements.error = document.querySelector(".error");
+  domElements.greenbush = document.querySelector(".obstacle.greenbush");
+  domElements.redbush = document.querySelector(".obstacle.redbush");
 
   // initGame()
 }
@@ -48,6 +52,26 @@ function showPath() {
     const key = getHtmlKey(char);
     key.classList.add("way");
     domElements.keyWay.push(key);
+  });
+}
+
+function showObstacles() {
+  domElements.keys.forEach((key) => {
+    if (!key.classList.contains("way")) {
+      const keyPos = getPosition(key);
+      let node;
+      const val = getRandomInt(3);
+      if (val === 1) {
+        node = domElements.greenbush.cloneNode();
+      } else if (val === 2) {
+        node = domElements.redbush.cloneNode();
+      }
+      if (!!node) {
+        setPosition(node, keyPos);
+        node.style.display = "block";
+        document.body.appendChild(node);
+      }
+    }
   });
 }
 
@@ -105,6 +129,7 @@ handleKeydown = function (evt) {
       evt.preventDefault();
       domElements.menu.style.display = "none";
       showPath();
+      showObstacles();
       setCharacterStartPos();
       setGoldenIdolPos();
       setTimeout(() => {

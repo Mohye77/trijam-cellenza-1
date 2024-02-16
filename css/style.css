@@ -71,13 +71,13 @@ body {
 .obstacle {
   background-image: url("../images/obstacles/1.png");
   background-size: cover;
-  width: 40px;
-  height: 40px;
+  width: 80px;
+  height: 80px;
   position: fixed;
   display: none;
 }
 
-.obstacle.alternate {
+.obstacle.greenbush {
   background-image: url("../images/obstacles/2.png");
 }
 
