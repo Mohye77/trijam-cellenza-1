@@ -72,23 +72,7 @@ const keyPaths = [
     "/",
     "§",
   ],
-  [
-    "1",
-    "A",
-    "Z",
-    "3",
-    "4",
-    "R",
-    "T",
-    "6",
-    "7",
-    "U",
-    "I",
-    "9",
-    "0",
-    "°",
-    "+",
-  ],
+  ["1", "A", "Z", "3", "4", "R", "T", "7", "U", "I", "9", "0", "°", "+"],
 ];
 
 var keyPath = [];
@@ -154,6 +138,7 @@ function setGoldenIdolPos() {
 }
 
 function moveCharacter() {
+  domElements.character.classList.add("run");
   for (let charIndex = 0; charIndex < usercharWay.length; charIndex++) {
     const userChar = usercharWay[charIndex];
     setTimeout(() => {
