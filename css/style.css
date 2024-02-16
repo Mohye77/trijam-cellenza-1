@@ -27,7 +27,6 @@ body {
 .key {
   width: 80px;
   height: 80px;
-  border: solid 1px red;
   background-image: url("../images/backgrounds/back1.png");
 }
 .key.alternate {

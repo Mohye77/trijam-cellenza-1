@@ -35,17 +35,64 @@ function initUI() {
   domElements.greenbush = document.querySelector(".obstacle.greenbush");
   domElements.redbush = document.querySelector(".obstacle.redbush");
 
-  // initGame()
+  initGame();
 }
 
 function initGame() {
-  var startLeftSide = getRandomInt(2) === 1;
-  var startKey = getStartKey(startLeftSide);
-  var endKey = getEndKey(startLeftSide);
-  initPath(startKey, endKey, startLeftSide);
+  // var startLeftSide = getRandomInt(2) === 1;
+  // var startKey = getStartKey(startLeftSide);
+  // var endKey = getEndKey(startLeftSide);
+  // initPath(startKey, endKey, startLeftSide);
+  initTempPath();
 }
 
-const keyPath = ["A", "Z", "E", "R", "T", "Y"];
+function initTempPath() {
+  var val = getRandomInt(3);
+  keyPath = keyPaths[val];
+}
+
+const keyPaths = [
+  ["1", "A", "Q", "W", "X", "C", "V", "B", "N", "?", ".", "/", "§"],
+  [
+    "A",
+    "Z",
+    "S",
+    "X",
+    "C",
+    "V",
+    "B",
+    "H",
+    "Y",
+    "6",
+    "7",
+    "8",
+    "9",
+    "O",
+    "L",
+    "/",
+    "§",
+  ],
+  [
+    "1",
+    "A",
+    "Z",
+    "3",
+    "4",
+    "R",
+    "T",
+    "6",
+    "7",
+    "U",
+    "I",
+    "9",
+    "0",
+    "P",
+    "°",
+    "+",
+  ],
+];
+
+var keyPath = [];
 
 function showPath() {
   keyPath.forEach((char) => {
@@ -125,6 +172,17 @@ function getHtmlKey(charKey) {
 
 handleKeydown = function (evt) {
   switch (evt.which) {
+    case 112: //F1
+      evt.preventDefault();
+      const values = document.querySelectorAll(".keyvalue");
+      values.forEach((val) => {
+        if (val.offsetParent === null) {
+          val.style.display = "block";
+        } else {
+          val.style.display = "none";
+        }
+      });
+      break;
     case 13: //enter
       evt.preventDefault();
       domElements.menu.style.display = "none";
