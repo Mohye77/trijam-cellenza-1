@@ -16,6 +16,8 @@ function initPath(start, end, isLeftSide) {
     }
   }
   path.push(lastKey);
+  console.log(path);
+  console.log("end")
 }
 
 function getNextKey(key, endKey, isLeftSide, currentPath) {
@@ -27,18 +29,34 @@ function getNextKey(key, endKey, isLeftSide, currentPath) {
       return endKey;
     } else {
       var randomKey =
-        key.rightNeighbors[getRandomInt(key.rightNeighbors.length - 1)];
+        key.rightNeighbors[getRandomInt(key.rightNeighbors.length)];
 
       if (key.rightNeighbors.length === 0) {
         return -1;
       }
+      var alreadyCheck = [];
+      var listIsComplete = false;
       while (
         currentPath.findIndex((x) => {
           return x === randomKey;
         }) != -1
       ) {
         randomKey =
-          key.rightNeighbors[getRandomInt(key.rightNeighbors.length - 1)];
+          key.rightNeighbors[getRandomInt(key.rightNeighbors.length)];
+          if(listIsComplete === true)
+          {
+            return -1;
+          }
+          if(alreadyCheck.findIndex((x) => {
+            return x === randomKey;
+          }) === -1)
+          {
+            alreadyCheck.push(randomKey);
+            if(alreadyCheck.length === key.rightNeighbors.length)
+            {
+              listIsComplete = true
+            }
+          }
       }
       return randomKey;
     }
@@ -50,18 +68,34 @@ function getNextKey(key, endKey, isLeftSide, currentPath) {
       return endKey;
     } else {
       var randomKey =
-        key.leftNeighbors[getRandomInt(key.leftNeighbors.length - 1)];
+        key.leftNeighbors[getRandomInt(key.leftNeighbors.length)];
 
       if (key.rightNeighbors.length === 0) {
         return -1;
       }
+      var alreadyCheck = [];
+      var listIsComplete = false;
       while (
         currentPath.findIndex((x) => {
           return x === randomKey;
         }) != -1
-      ) {
+      ) { 
+        if(listIsComplete === true)
+        {
+          return -1;
+        }
         randomKey =
-          key.leftNeighbors[getRandomInt(key.leftNeighbors.length - 1)];
+          key.leftNeighbors[getRandomInt(key.leftNeighbors.length)];
+          if(alreadyCheck.findIndex((x) => {
+            return x === randomKey;
+          }) === -1)
+          {
+            alreadyCheck.push(randomKey);
+            if(alreadyCheck.length === key.rightNeighbors.length)
+            {
+              listIsComplete = true
+            }
+          }
       }
       return randomKey;
     }
@@ -74,19 +108,19 @@ function getStartKey(startLeftSide) {
   if (startLeftSide === true) {
     if (startKeyRandom == 0) {
       startKey = "1";
-    } else if (startKeyRandom == 1) {
+    } else if (startKeyRandom === 1) {
       startKey = "A";
-    } else if (startKeyRandom == 2) {
+    } else if (startKeyRandom === 2) {
       startKey = "Q";
     } else {
       startKey = ">";
     }
   } else {
-    if (startKeyRandom == 0) {
+    if (startKeyRandom === 0) {
       startKey = "+";
-    } else if (startKeyRandom == 1) {
+    } else if (startKeyRandom === 1) {
       startKey = "£";
-    } else if (startKeyRandom == 2) {
+    } else if (startKeyRandom === 2) {
       startKey = "µ";
     } else {
       startKey = "*";
@@ -100,21 +134,21 @@ function getEndKey(startLeftSide) {
   var endKeyRandom = getRandomInt(4);
   var endKey;
   if (startLeftSide === true) {
-    if (endKeyRandom == 0) {
+    if (endKeyRandom === 0) {
       endKey = "+";
-    } else if (endKeyRandom == 1) {
+    } else if (endKeyRandom === 1) {
       endKey = "£";
-    } else if (endKeyRandom == 2) {
+    } else if (endKeyRandom === 2) {
       endKey = "µ";
     } else {
       endKey = "*";
     }
   } else {
-    if (endKeyRandom == 0) {
+    if (endKeyRandom === 0) {
       endKey = "1";
-    } else if (endKeyRandom == 1) {
+    } else if (endKeyRandom === 1) {
       endKey = "A";
-    } else if (endKeyRandom == 2) {
+    } else if (endKeyRandom === 2) {
       endKey = "Q";
     } else {
       endKey = ">";
