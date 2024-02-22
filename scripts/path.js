@@ -2,30 +2,31 @@ function initPath(start, end, isLeftSide) {
   console.log("start", start);
   console.log("end", end);
   console.log("isLeftSide", isLeftSide);
+  var disableKeys = initDisableKeys(start, end, isLeftSide);
   var lastKey = start;
   var path = [];
   while (lastKey != end) {
     path.push(lastKey);
+    disableKeys.push(lastKey);
     console.log(lastKey);
     console.log(path);
-    lastKey = getNextKey(keyCodeByKey[lastKey], end, isLeftSide, path);
+    lastKey = getNextKey(keyCodeByKey[lastKey], end, isLeftSide, path, disableKeys);
     if (lastKey === -1 || lastKey == null) {
-      console.log("Je reset");
       path = [];
       lastKey = start;
+      disableKeys = initDisableKeys(start, end, isLeftSide);
     }
   }
   path.push(lastKey);
   console.log(path);
-  console.log("end")
+  return path;
 }
 
-function getNextKey(key, endKey, isLeftSide, currentPath) {
+function getNextKey(key, endKey, isLeftSide, currentPath, disableKeys) {
   if (isLeftSide) {
-    if (key.rightNeighbors == null) {
-      console.log("je suis null", key);
-    }
-    if (key.rightNeighbors[endKey] != null) {
+    if (key.rightNeighbors.findIndex((x) => {
+      return x === endKey;
+    }) !== -1) {
       return endKey;
     } else {
       var randomKey =
@@ -37,7 +38,7 @@ function getNextKey(key, endKey, isLeftSide, currentPath) {
       var alreadyCheck = [];
       var listIsComplete = false;
       while (
-        currentPath.findIndex((x) => {
+        disableKeys.findIndex((x) => {
           return x === randomKey;
         }) != -1
       ) {
@@ -58,13 +59,13 @@ function getNextKey(key, endKey, isLeftSide, currentPath) {
             }
           }
       }
+      disableKeys = disableKeyNeighbors(currentPath[currentPath.length - 1], disableKeys, isLeftSide)
       return randomKey;
     }
   } else {
-    if (key.leftNeighbors == null) {
-      console.log("je suis null", key);
-    }
-    if (key.leftNeighbors[endKey] != null) {
+    if (key.leftNeighbors.findIndex((x) => {
+      return x === endKey;
+    }) !== -1) {
       return endKey;
     } else {
       var randomKey =
@@ -76,7 +77,7 @@ function getNextKey(key, endKey, isLeftSide, currentPath) {
       var alreadyCheck = [];
       var listIsComplete = false;
       while (
-        currentPath.findIndex((x) => {
+        disableKeys.findIndex((x) => {
           return x === randomKey;
         }) != -1
       ) { 
@@ -91,12 +92,13 @@ function getNextKey(key, endKey, isLeftSide, currentPath) {
           }) === -1)
           {
             alreadyCheck.push(randomKey);
-            if(alreadyCheck.length === key.rightNeighbors.length)
+            if(alreadyCheck.length === key.leftNeighbors.length)
             {
               listIsComplete = true
             }
           }
       }
+      disableKeys = disableKeyNeighbors(currentPath[currentPath.length - 1], disableKeys, isLeftSide)
       return randomKey;
     }
   }
@@ -123,7 +125,7 @@ function getStartKey(startLeftSide) {
     } else if (startKeyRandom === 2) {
       startKey = "µ";
     } else {
-      startKey = "*";
+      startKey = "§";
     }
   }
 
@@ -141,7 +143,7 @@ function getEndKey(startLeftSide) {
     } else if (endKeyRandom === 2) {
       endKey = "µ";
     } else {
-      endKey = "*";
+      endKey = "§";
     }
   } else {
     if (endKeyRandom === 0) {
@@ -156,6 +158,69 @@ function getEndKey(startLeftSide) {
   }
 
   return endKey;
+}
+
+function initDisableKeys(startKey, endKey, isLeftSide)
+{
+  var disableKeys = [];
+  
+  if(isLeftSide)
+  {
+    if(startKey !== '>')
+    {
+      disableKeys.push('>')
+    }
+    if(endKey !== 'µ')
+    {
+      disableKeys.push('µ')
+    }
+  } else
+  {
+    if(endKey !== '>')
+    {
+      disableKeys.push('>')
+    }
+    if(startKey !== 'µ')
+    {
+      disableKeys.push('µ')
+    }
+  }
+  return disableKeys;
+}
+
+function disableKeyNeighbors(key, disableKeys, isLeftSide)
+{
+  if(isLeftSide)
+  {
+    keyCodeByKey[key].rightNeighbors.forEach((k) => {
+      if (disableKeys.findIndex((x) => {
+        return x === k;
+      }) === -1 ) {
+        disableKeys.push(k);
+        console.log('new DisableKey ',  k, ' for key ',key )
+      }
+      else
+      {
+        console.log('key find ',  k, ' for key ',key )
+      }
+    })
+  }
+  else
+  {
+    keyCodeByKey[key].leftNeighbors.forEach((k) => {
+      if (disableKeys.findIndex((x) => {
+        return x === k;
+      }) === -1 ) {
+        console.log('new DisableKey ',  k, ' for key ',key )
+        disableKeys.push(k);
+      }
+      else
+      {
+        console.log('key find ',  k, ' for key ',key )
+      }
+    })
+  }
+  return disableKeys;
 }
 
 function generatePath(startKey, endkey) {}

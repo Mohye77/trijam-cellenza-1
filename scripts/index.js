@@ -39,10 +39,10 @@ function initUI() {
 }
 
 function initGame() {
-  // var startLeftSide = getRandomInt(2) === 1;
-  // var startKey = getStartKey(startLeftSide);
-  // var endKey = getEndKey(startLeftSide);
-  // initPath(startKey, endKey, startLeftSide);
+   var startLeftSide = getRandomInt(2) === 1;
+   var startKey = getStartKey(startLeftSide);
+   var endKey = getEndKey(startLeftSide);
+   keyPath = initPath(startKey, endKey, startLeftSide);
   initTempPath();
 }
 
@@ -193,7 +193,7 @@ handleKeydown = function (evt) {
         } else {
           domElements.success.style.display = "block";
         }
-      }, 500);
+      }, 1000);
       break;
     default:
       break;
