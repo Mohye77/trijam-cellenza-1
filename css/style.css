@@ -67,6 +67,11 @@ body {
   background-image: url("../images/character/run.gif");
 }
 
+.character.flip{
+  -webkit-transform: scaleX(-1);
+  transform: scaleX(-1);
+}
+
 .obstacle {
   background-image: url("../images/obstacles/1.png");
   background-size: cover;
@@ -91,7 +96,8 @@ body {
 
 .menu,
 .error,
-.success {
+.success,
+.loading {
   background: #fff;
   position: fixed;
 }

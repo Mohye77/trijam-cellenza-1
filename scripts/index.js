@@ -9,6 +9,7 @@ var domElements = {
   greenbush: {},
   redbush: {},
   menu: {},
+  loading: {},
   error: {},
   success: {},
   keys: [],
@@ -28,6 +29,7 @@ function initUI() {
 
   document.addEventListener("keydown", handleKeydown);
   domElements.character = document.querySelector(".character");
+  domElements.loading = document.querySelector(".loading");
   domElements.goldenIdol = document.querySelector(".goldenIdol");
   domElements.menu = document.querySelector(".menu");
   domElements.success = document.querySelector(".success");
@@ -39,11 +41,17 @@ function initUI() {
 }
 
 function initGame() {
-   var startLeftSide = getRandomInt(2) === 1;
-   var startKey = getStartKey(startLeftSide);
-   var endKey = getEndKey(startLeftSide);
-   keyPath = initPath(startKey, endKey, startLeftSide);
-  initTempPath();
+  var startLeftSide = getRandomInt(2) === 1;
+  var startKey = getStartKey(startLeftSide);
+  var endKey = getEndKey(startLeftSide);
+  keyPath = initPath(startKey, endKey, startLeftSide);
+  gameState.started = true;
+  domElements.loading.style.display = "none";
+  domElements.menu.style.display = "block";
+  if (!startLeftSide) {
+    domElements.character.classList.add("flip");
+  }
+  //initTempPath();
 }
 
 function initTempPath() {
@@ -154,48 +162,54 @@ function getHtmlKey(charKey) {
 }
 
 handleKeydown = function (evt) {
-  switch (evt.which) {
-    case 112: //F1
-      evt.preventDefault();
-      const values = document.querySelectorAll(".keyvalue");
-      values.forEach((val) => {
-        if (val.offsetParent === null) {
-          val.style.display = "block";
-        } else {
-          val.style.display = "none";
-        }
-      });
-      break;
-    case 13: //enter
-      evt.preventDefault();
-      domElements.menu.style.display = "none";
-      showPath();
-      showObstacles();
-      setCharacterStartPos();
-      setGoldenIdolPos();
-      setTimeout(() => {
-        var userWay = prompt("Show me the way! (Use CAPS LOCK)");
-        usercharWay = Array.from(userWay);
-        if (usercharWay.length != keyPath.length) {
-          gameState.error = true;
-        } else {
-          for (let charIndex = 0; charIndex < usercharWay.length; charIndex++) {
-            if (usercharWay[charIndex] !== keyPath[charIndex]) {
-              gameState.error = true;
-              break;
+  if (gameState.started) {
+    switch (evt.which) {
+      case 112: //F1
+        evt.preventDefault();
+        const values = document.querySelectorAll(".keyvalue");
+        values.forEach((val) => {
+          if (val.offsetParent === null) {
+            val.style.display = "block";
+          } else {
+            val.style.display = "none";
+          }
+        });
+        break;
+      case 13: //enter
+        evt.preventDefault();
+        domElements.menu.style.display = "none";
+        showPath();
+        showObstacles();
+        setCharacterStartPos();
+        setGoldenIdolPos();
+        setTimeout(() => {
+          var userWay = prompt("Show me the way! (Use CAPS LOCK)");
+          usercharWay = Array.from(userWay);
+          if (usercharWay.length != keyPath.length) {
+            gameState.error = true;
+          } else {
+            for (
+              let charIndex = 0;
+              charIndex < usercharWay.length;
+              charIndex++
+            ) {
+              if (usercharWay[charIndex] !== keyPath[charIndex]) {
+                gameState.error = true;
+                break;
+              }
             }
           }
-        }
-        moveCharacter();
+          moveCharacter();
 
-        if (gameState.error === true) {
-          domElements.error.style.display = "block";
-        } else {
-          domElements.success.style.display = "block";
-        }
-      }, 1000);
-      break;
-    default:
-      break;
+          if (gameState.error === true) {
+            domElements.error.style.display = "block";
+          } else {
+            domElements.success.style.display = "block";
+          }
+        }, 500);
+        break;
+      default:
+        break;
+    }
   }
 };

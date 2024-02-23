@@ -10,7 +10,13 @@ function initPath(start, end, isLeftSide) {
     disableKeys.push(lastKey);
     console.log(lastKey);
     console.log(path);
-    lastKey = getNextKey(keyCodeByKey[lastKey], end, isLeftSide, path, disableKeys);
+    lastKey = getNextKey(
+      keyCodeByKey[lastKey],
+      end,
+      isLeftSide,
+      path,
+      disableKeys
+    );
     if (lastKey === -1 || lastKey == null) {
       path = [];
       lastKey = start;
@@ -24,9 +30,11 @@ function initPath(start, end, isLeftSide) {
 
 function getNextKey(key, endKey, isLeftSide, currentPath, disableKeys) {
   if (isLeftSide) {
-    if (key.rightNeighbors.findIndex((x) => {
-      return x === endKey;
-    }) !== -1) {
+    if (
+      key.rightNeighbors.findIndex((x) => {
+        return x === endKey;
+      }) !== -1
+    ) {
       return endKey;
     } else {
       var randomKey =
@@ -42,34 +50,37 @@ function getNextKey(key, endKey, isLeftSide, currentPath, disableKeys) {
           return x === randomKey;
         }) != -1
       ) {
-        randomKey =
-          key.rightNeighbors[getRandomInt(key.rightNeighbors.length)];
-          if(listIsComplete === true)
-          {
-            return -1;
-          }
-          if(alreadyCheck.findIndex((x) => {
+        randomKey = key.rightNeighbors[getRandomInt(key.rightNeighbors.length)];
+        if (listIsComplete === true) {
+          return -1;
+        }
+        if (
+          alreadyCheck.findIndex((x) => {
             return x === randomKey;
-          }) === -1)
-          {
-            alreadyCheck.push(randomKey);
-            if(alreadyCheck.length === key.rightNeighbors.length)
-            {
-              listIsComplete = true
-            }
+          }) === -1
+        ) {
+          alreadyCheck.push(randomKey);
+          if (alreadyCheck.length === key.rightNeighbors.length) {
+            listIsComplete = true;
           }
+        }
       }
-      disableKeys = disableKeyNeighbors(currentPath[currentPath.length - 1], disableKeys, isLeftSide)
+      disableKeys = disableKeyNeighbors(
+        currentPath[currentPath.length - 1],
+        disableKeys,
+        isLeftSide
+      );
       return randomKey;
     }
   } else {
-    if (key.leftNeighbors.findIndex((x) => {
-      return x === endKey;
-    }) !== -1) {
+    if (
+      key.leftNeighbors.findIndex((x) => {
+        return x === endKey;
+      }) !== -1
+    ) {
       return endKey;
     } else {
-      var randomKey =
-        key.leftNeighbors[getRandomInt(key.leftNeighbors.length)];
+      var randomKey = key.leftNeighbors[getRandomInt(key.leftNeighbors.length)];
 
       if (key.rightNeighbors.length === 0) {
         return -1;
@@ -80,25 +91,27 @@ function getNextKey(key, endKey, isLeftSide, currentPath, disableKeys) {
         disableKeys.findIndex((x) => {
           return x === randomKey;
         }) != -1
-      ) { 
-        if(listIsComplete === true)
-        {
+      ) {
+        if (listIsComplete === true) {
           return -1;
         }
-        randomKey =
-          key.leftNeighbors[getRandomInt(key.leftNeighbors.length)];
-          if(alreadyCheck.findIndex((x) => {
+        randomKey = key.leftNeighbors[getRandomInt(key.leftNeighbors.length)];
+        if (
+          alreadyCheck.findIndex((x) => {
             return x === randomKey;
-          }) === -1)
-          {
-            alreadyCheck.push(randomKey);
-            if(alreadyCheck.length === key.leftNeighbors.length)
-            {
-              listIsComplete = true
-            }
+          }) === -1
+        ) {
+          alreadyCheck.push(randomKey);
+          if (alreadyCheck.length === key.leftNeighbors.length) {
+            listIsComplete = true;
           }
+        }
       }
-      disableKeys = disableKeyNeighbors(currentPath[currentPath.length - 1], disableKeys, isLeftSide)
+      disableKeys = disableKeyNeighbors(
+        currentPath[currentPath.length - 1],
+        disableKeys,
+        isLeftSide
+      );
       return randomKey;
     }
   }
@@ -115,7 +128,7 @@ function getStartKey(startLeftSide) {
     } else if (startKeyRandom === 2) {
       startKey = "Q";
     } else {
-      startKey = ">";
+      startKey = "<";
     }
   } else {
     if (startKeyRandom === 0) {
@@ -153,72 +166,61 @@ function getEndKey(startLeftSide) {
     } else if (endKeyRandom === 2) {
       endKey = "Q";
     } else {
-      endKey = ">";
+      endKey = "<";
     }
   }
 
   return endKey;
 }
 
-function initDisableKeys(startKey, endKey, isLeftSide)
-{
+function initDisableKeys(startKey, endKey, isLeftSide) {
   var disableKeys = [];
-  
-  if(isLeftSide)
-  {
-    if(startKey !== '>')
-    {
-      disableKeys.push('>')
+
+  if (isLeftSide) {
+    if (startKey !== "<") {
+      disableKeys.push("<");
     }
-    if(endKey !== 'µ')
-    {
-      disableKeys.push('µ')
+    if (endKey !== "µ") {
+      disableKeys.push("µ");
     }
-  } else
-  {
-    if(endKey !== '>')
-    {
-      disableKeys.push('>')
+  } else {
+    if (endKey !== "<") {
+      disableKeys.push("<");
     }
-    if(startKey !== 'µ')
-    {
-      disableKeys.push('µ')
+    if (startKey !== "µ") {
+      disableKeys.push("µ");
     }
   }
   return disableKeys;
 }
 
-function disableKeyNeighbors(key, disableKeys, isLeftSide)
-{
-  if(isLeftSide)
-  {
+function disableKeyNeighbors(key, disableKeys, isLeftSide) {
+  if (isLeftSide) {
     keyCodeByKey[key].rightNeighbors.forEach((k) => {
-      if (disableKeys.findIndex((x) => {
-        return x === k;
-      }) === -1 ) {
+      if (
+        disableKeys.findIndex((x) => {
+          return x === k;
+        }) === -1
+      ) {
         disableKeys.push(k);
-        console.log('new DisableKey ',  k, ' for key ',key )
+        console.log("new DisableKey ", k, " for key ", key);
+      } else {
+        console.log("key find ", k, " for key ", key);
       }
-      else
-      {
-        console.log('key find ',  k, ' for key ',key )
-      }
-    })
-  }
-  else
-  {
+    });
+  } else {
     keyCodeByKey[key].leftNeighbors.forEach((k) => {
-      if (disableKeys.findIndex((x) => {
-        return x === k;
-      }) === -1 ) {
-        console.log('new DisableKey ',  k, ' for key ',key )
+      if (
+        disableKeys.findIndex((x) => {
+          return x === k;
+        }) === -1
+      ) {
+        console.log("new DisableKey ", k, " for key ", key);
         disableKeys.push(k);
+      } else {
+        console.log("key find ", k, " for key ", key);
       }
-      else
-      {
-        console.log('key find ',  k, ' for key ',key )
-      }
-    })
+    });
   }
   return disableKeys;
 }
